@@ -3,11 +3,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
+  const [patientName, setPatientName] = useState("");
+  const [patientPhone, setPatientPhone] = useState("");
+  const [complaint, setComplaint] = useState("");
 
   const doctors = [
     { 
@@ -132,10 +144,122 @@ const Index = () => {
             Найдите проверенных специалистов, получите онлайн-консультацию и узнайте реальные истории пациентов
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gap-2">
-              <Icon name="Calendar" size={20} />
-              Записаться на приём
-            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="gap-2">
+                  <Icon name="Calendar" size={20} />
+                  Записаться на приём
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl">Запись на консультацию</DialogTitle>
+                  <DialogDescription>
+                    Заполните форму, и мы свяжемся с вами для подтверждения записи
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-6 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="patient-name">Ваше имя *</Label>
+                    <Input 
+                      id="patient-name" 
+                      placeholder="Иван Иванов" 
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="patient-phone">Телефон *</Label>
+                    <Input 
+                      id="patient-phone" 
+                      placeholder="+7 (999) 123-45-67" 
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="doctor">Выберите специалиста *</Label>
+                    <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
+                      <SelectTrigger id="doctor">
+                        <SelectValue placeholder="Выберите врача" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {doctors.filter(d => d.available).map((doctor) => (
+                          <SelectItem key={doctor.id} value={doctor.id.toString()}>
+                            {doctor.name} — {doctor.specialty}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Выберите дату *</Label>
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                      className="rounded-md border"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="time">Выберите время *</Label>
+                    <Select value={selectedTime} onValueChange={setSelectedTime}>
+                      <SelectTrigger id="time">
+                        <SelectValue placeholder="Выберите время" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="09:00">09:00</SelectItem>
+                        <SelectItem value="10:00">10:00</SelectItem>
+                        <SelectItem value="11:00">11:00</SelectItem>
+                        <SelectItem value="12:00">12:00</SelectItem>
+                        <SelectItem value="14:00">14:00</SelectItem>
+                        <SelectItem value="15:00">15:00</SelectItem>
+                        <SelectItem value="16:00">16:00</SelectItem>
+                        <SelectItem value="17:00">17:00</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="complaint">Опишите жалобы</Label>
+                    <Textarea 
+                      id="complaint" 
+                      placeholder="Расскажите о своих симптомах или причине обращения..." 
+                      className="min-h-[100px]"
+                      value={complaint}
+                      onChange={(e) => setComplaint(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <Button 
+                      className="flex-1" 
+                      size="lg"
+                      onClick={() => {
+                        setIsDialogOpen(false);
+                        alert('Спасибо за запись! Мы свяжемся с вами в ближайшее время.');
+                      }}
+                      disabled={!patientName || !patientPhone || !selectedDoctor || !selectedDate || !selectedTime}
+                    >
+                      Записаться
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="flex-1" 
+                      size="lg"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      Отмена
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
             <Button size="lg" variant="outline" className="gap-2">
               <Icon name="MessageCircle" size={20} />
               Онлайн консультация
@@ -227,7 +351,16 @@ const Index = () => {
                       <span className="font-semibold">{doctor.rating}</span>
                       <span className="text-sm text-muted-foreground">({doctor.reviews} отзывов)</span>
                     </div>
-                    <Button size="sm" variant="outline">Записаться</Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedDoctor(doctor.id.toString());
+                        setIsDialogOpen(true);
+                      }}
+                    >
+                      Записаться
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -296,7 +429,12 @@ const Index = () => {
               <p className="text-sm opacity-80">Первая консультация бесплатно</p>
             </div>
           </div>
-          <Button size="lg" variant="secondary" className="mt-8">
+          <Button 
+            size="lg" 
+            variant="secondary" 
+            className="mt-8"
+            onClick={() => setIsDialogOpen(true)}
+          >
             Записаться на консультацию
           </Button>
         </div>
