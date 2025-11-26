@@ -111,6 +111,45 @@ const Index = () => {
     }
   ];
 
+  const patientGuide = [
+    {
+      id: 1,
+      title: "Как получить полис ОМС",
+      description: "Пошаговая инструкция для получения полиса обязательного медицинского страхования",
+      icon: "FileText"
+    },
+    {
+      id: 2,
+      title: "Бесплатные медицинские услуги",
+      description: "Полный список услуг, доступных по полису ОМС в вашем регионе",
+      icon: "Heart"
+    },
+    {
+      id: 3,
+      title: "Права пациента",
+      description: "Что нужно знать о своих правах при обращении в медицинские учреждения",
+      icon: "Shield"
+    },
+    {
+      id: 4,
+      title: "Как записаться к врачу",
+      description: "Все способы записи на приём: через интернет, телефон, лично в регистратуре",
+      icon: "Calendar"
+    },
+    {
+      id: 5,
+      title: "Диспансеризация",
+      description: "Кому положена бесплатная диспансеризация и как к ней подготовиться",
+      icon: "ClipboardList"
+    },
+    {
+      id: 6,
+      title: "Экстренная помощь",
+      description: "Когда и как вызывать скорую помощь, куда обращаться в ночное время",
+      icon: "Ambulance"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -127,6 +166,7 @@ const Index = () => {
               <a href="#doctors" className="text-sm font-medium hover:text-primary transition-colors">Врачи</a>
               <a href="#consultation" className="text-sm font-medium hover:text-primary transition-colors">Консультации</a>
               <a href="#stories" className="text-sm font-medium hover:text-primary transition-colors">Истории</a>
+              <a href="#guide" className="text-sm font-medium hover:text-primary transition-colors">Справочник</a>
               <a href="#clinics" className="text-sm font-medium hover:text-primary transition-colors">Клиники</a>
             </nav>
             <Button size="sm">Войти</Button>
@@ -440,7 +480,35 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="clinics" className="py-16 px-4">
+      <section id="guide" className="py-16 px-4 bg-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-3">Справочник пациента</h3>
+            <p className="text-muted-foreground">Полезная информация о медицинских услугах и ваших правах</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {patientGuide.map((item) => (
+              <Card key={item.id} className="hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
+                <CardHeader>
+                  <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Icon name={item.icon} className="text-white" size={28} />
+                  </div>
+                  <CardTitle className="text-xl">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
+                  <Button variant="link" className="p-0 h-auto">
+                    Подробнее →
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="clinics" className="py-16 px-4 bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold mb-3">Медицинские учреждения</h3>
@@ -500,6 +568,7 @@ const Index = () => {
                 <li><a href="#doctors" className="hover:text-white transition-colors">Врачи</a></li>
                 <li><a href="#consultation" className="hover:text-white transition-colors">Консультации</a></li>
                 <li><a href="#stories" className="hover:text-white transition-colors">Истории</a></li>
+                <li><a href="#guide" className="hover:text-white transition-colors">Справочник</a></li>
                 <li><a href="#clinics" className="hover:text-white transition-colors">Клиники</a></li>
               </ul>
             </div>
