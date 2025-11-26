@@ -238,9 +238,9 @@ const Index = () => {
               </div>
             </div>
             <nav className="hidden md:flex gap-6">
-              <a href="#doctors" className="text-sm font-medium hover:text-primary transition-colors">Специалисты</a>
               <a href="#qa" className="text-sm font-medium hover:text-primary transition-colors">Врач отвечает</a>
               <a href="#myths" className="text-sm font-medium hover:text-primary transition-colors">Мифы</a>
+              <a href="#stories" className="text-sm font-medium hover:text-primary transition-colors">Истории</a>
               <a href="#news" className="text-sm font-medium hover:text-primary transition-colors">Новости</a>
               <a href="#guide" className="text-sm font-medium hover:text-primary transition-colors">Справочник</a>
             </nav>
@@ -417,74 +417,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="doctors" className="py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-3">Специалисты</h3>
-            <p className="text-muted-foreground">Квалифицированные врачи готовы вам помочь</p>
-          </div>
-          
-          <div className="mb-8 flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-              <Input placeholder="Поиск врача или специальности..." className="pl-10" />
-            </div>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full sm:w-auto">
-              <TabsList>
-                <TabsTrigger value="all">Все</TabsTrigger>
-                <TabsTrigger value="available">Доступны</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {doctors.map((doctor) => (
-              <Card key={doctor.id} className="hover:shadow-lg transition-all">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex gap-4">
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-xl font-bold">
-                        {doctor.name.split(' ')[1][0]}
-                      </div>
-                      <div>
-                        <CardTitle className="text-lg">{doctor.name}</CardTitle>
-                        <CardDescription>{doctor.specialty}</CardDescription>
-                        <p className="text-sm text-muted-foreground mt-1">Стаж: {doctor.experience}</p>
-                      </div>
-                    </div>
-                    {doctor.available && (
-                      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                        Доступен
-                      </Badge>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={16} />
-                      <span className="font-semibold">{doctor.rating}</span>
-                      <span className="text-sm text-muted-foreground">({doctor.reviews} отзывов)</span>
-                    </div>
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => {
-                        setSelectedDoctor(doctor.id.toString());
-                        setIsDialogOpen(true);
-                      }}
-                    >
-                      Записаться
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="qa" className="py-16 px-4 bg-gradient-to-b from-white to-blue-50">
+      <section id="qa" className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold mb-3">Врач отвечает</h3>
@@ -518,7 +451,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="myths" className="py-16 px-4 bg-slate-50">
+      <section id="myths" className="py-16 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold mb-3">Развенчиваем мифы</h3>
@@ -551,39 +484,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="news" className="py-16 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-3">Новости медицины</h3>
-            <p className="text-muted-foreground">Актуальные события и достижения</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {news.map((item) => (
-              <Card key={item.id} className="hover:shadow-xl transition-all hover:-translate-y-1">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-blue-600/20 flex items-center justify-center">
-                  <Icon name="Newspaper" size={64} className="text-primary/40" />
-                </div>
-                <CardHeader>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                    <Icon name="Calendar" size={14} />
-                    {item.date}
-                  </div>
-                  <CardTitle className="text-lg">{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4">{item.preview}</p>
-                  <Button variant="link" className="p-0 h-auto">
-                    Читать далее →
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="stories" className="py-16 px-4 bg-gradient-to-b from-white to-blue-50">
+      <section id="stories" className="py-16 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold mb-3">Истории пациентов</h3>
@@ -612,6 +513,38 @@ const Index = () => {
                       Читать далее →
                     </Button>
                   </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="news" className="py-16 px-4 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-3">Новости медицины</h3>
+            <p className="text-muted-foreground">Актуальные события и достижения</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {news.map((item) => (
+              <Card key={item.id} className="hover:shadow-xl transition-all hover:-translate-y-1">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-blue-600/20 flex items-center justify-center">
+                  <Icon name="Newspaper" size={64} className="text-primary/40" />
+                </div>
+                <CardHeader>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                    <Icon name="Calendar" size={14} />
+                    {item.date}
+                  </div>
+                  <CardTitle className="text-lg">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">{item.preview}</p>
+                  <Button variant="link" className="p-0 h-auto">
+                    Читать далее →
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -739,11 +672,10 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Разделы</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><a href="#doctors" className="hover:text-white transition-colors">Специалисты</a></li>
                 <li><a href="#qa" className="hover:text-white transition-colors">Врач отвечает</a></li>
                 <li><a href="#myths" className="hover:text-white transition-colors">Мифы</a></li>
-                <li><a href="#news" className="hover:text-white transition-colors">Новости</a></li>
                 <li><a href="#stories" className="hover:text-white transition-colors">Истории</a></li>
+                <li><a href="#news" className="hover:text-white transition-colors">Новости</a></li>
                 <li><a href="#guide" className="hover:text-white transition-colors">Справочник</a></li>
               </ul>
             </div>
