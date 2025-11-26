@@ -150,6 +150,81 @@ const Index = () => {
     }
   ];
 
+  const doctorAnswers = [
+    {
+      id: 1,
+      question: "Нужно ли делать прививку от гриппа?",
+      doctor: "Доктор Анна Петрова, Терапевт",
+      answer: "Вакцинация от гриппа рекомендуется всем, особенно людям из групп риска...",
+      date: "2 дня назад"
+    },
+    {
+      id: 2,
+      question: "Как часто нужно проходить диспансеризацию?",
+      doctor: "Доктор Михаил Соколов, Терапевт",
+      answer: "Диспансеризация проводится раз в три года для лиц старше 18 лет...",
+      date: "5 дней назад"
+    },
+    {
+      id: 3,
+      question: "Какие анализы нужны перед операцией?",
+      doctor: "Доктор Сергей Морозов, Хирург",
+      answer: "Стандартный набор включает общий анализ крови, мочи, ЭКГ...",
+      date: "1 неделю назад"
+    }
+  ];
+
+  const myths = [
+    {
+      id: 1,
+      title: "Антибиотики лечат простуду",
+      truth: "Это миф. Антибиотики действуют только на бактерии, а простуда вызывается вирусами.",
+      icon: "AlertCircle"
+    },
+    {
+      id: 2,
+      title: "Прививки вызывают аутизм",
+      truth: "Научно доказано отсутствие связи между вакцинацией и аутизмом.",
+      icon: "XCircle"
+    },
+    {
+      id: 3,
+      title: "Чем больше витаминов, тем лучше",
+      truth: "Избыток витаминов может быть вреден. Нужна сбалансированная доза.",
+      icon: "AlertTriangle"
+    },
+    {
+      id: 4,
+      title: "Сахар делает детей гиперактивными",
+      truth: "Исследования не подтвердили прямой связи между сахаром и гиперактивностью.",
+      icon: "Info"
+    }
+  ];
+
+  const news = [
+    {
+      id: 1,
+      title: "В городе открылся новый диагностический центр",
+      preview: "Современное оборудование позволит проводить исследования на европейском уровне...",
+      date: "Сегодня",
+      image: "hospital"
+    },
+    {
+      id: 2,
+      title: "Начинается запись на бесплатную вакцинацию",
+      preview: "Все желающие могут пройти вакцинацию от гриппа в поликлиниках города...",
+      date: "Вчера",
+      image: "vaccine"
+    },
+    {
+      id: 3,
+      title: "Новые методы лечения онкологии",
+      preview: "Местная клиника внедрила инновационную методику лечения рака...",
+      date: "3 дня назад",
+      image: "science"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -163,11 +238,11 @@ const Index = () => {
               </div>
             </div>
             <nav className="hidden md:flex gap-6">
-              <a href="#doctors" className="text-sm font-medium hover:text-primary transition-colors">Врачи</a>
-              <a href="#consultation" className="text-sm font-medium hover:text-primary transition-colors">Консультации</a>
-              <a href="#stories" className="text-sm font-medium hover:text-primary transition-colors">Истории</a>
+              <a href="#doctors" className="text-sm font-medium hover:text-primary transition-colors">Специалисты</a>
+              <a href="#qa" className="text-sm font-medium hover:text-primary transition-colors">Врач отвечает</a>
+              <a href="#myths" className="text-sm font-medium hover:text-primary transition-colors">Мифы</a>
+              <a href="#news" className="text-sm font-medium hover:text-primary transition-colors">Новости</a>
               <a href="#guide" className="text-sm font-medium hover:text-primary transition-colors">Справочник</a>
-              <a href="#clinics" className="text-sm font-medium hover:text-primary transition-colors">Клиники</a>
             </nav>
             <Button size="sm">Войти</Button>
           </div>
@@ -345,7 +420,7 @@ const Index = () => {
       <section id="doctors" className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-3">Наши специалисты</h3>
+            <h3 className="text-3xl font-bold mb-3">Специалисты</h3>
             <p className="text-muted-foreground">Квалифицированные врачи готовы вам помочь</p>
           </div>
           
@@ -402,6 +477,105 @@ const Index = () => {
                       Записаться
                     </Button>
                   </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="qa" className="py-16 px-4 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-3">Врач отвечает</h3>
+            <p className="text-muted-foreground">Ответы специалистов на популярные вопросы</p>
+          </div>
+
+          <div className="space-y-6">
+            {doctorAnswers.map((item) => (
+              <Card key={item.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <CardTitle className="text-xl mb-2">{item.question}</CardTitle>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Icon name="Stethoscope" size={16} />
+                        <span>{item.doctor}</span>
+                      </div>
+                    </div>
+                    <Badge variant="secondary">{item.date}</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">{item.answer}</p>
+                  <Button variant="link" className="p-0 h-auto">
+                    Читать полностью →
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="myths" className="py-16 px-4 bg-slate-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-3">Развенчиваем мифы</h3>
+            <p className="text-muted-foreground">Правда и вымысел о здоровье</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {myths.map((myth) => (
+              <Card key={myth.id} className="hover:shadow-lg transition-shadow border-l-4 border-l-destructive">
+                <CardHeader>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name={myth.icon} className="text-destructive" size={24} />
+                    </div>
+                    <div>
+                      <Badge variant="destructive" className="mb-2">МИФ</Badge>
+                      <CardTitle className="text-lg">{myth.title}</CardTitle>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="pl-16">
+                    <Badge variant="default" className="mb-2 bg-green-600">ПРАВДА</Badge>
+                    <p className="text-sm text-muted-foreground">{myth.truth}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="news" className="py-16 px-4 bg-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-3">Новости медицины</h3>
+            <p className="text-muted-foreground">Актуальные события и достижения</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {news.map((item) => (
+              <Card key={item.id} className="hover:shadow-xl transition-all hover:-translate-y-1">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-blue-600/20 flex items-center justify-center">
+                  <Icon name="Newspaper" size={64} className="text-primary/40" />
+                </div>
+                <CardHeader>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                    <Icon name="Calendar" size={14} />
+                    {item.date}
+                  </div>
+                  <CardTitle className="text-lg">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">{item.preview}</p>
+                  <Button variant="link" className="p-0 h-auto">
+                    Читать далее →
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -565,11 +739,12 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Разделы</h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><a href="#doctors" className="hover:text-white transition-colors">Врачи</a></li>
-                <li><a href="#consultation" className="hover:text-white transition-colors">Консультации</a></li>
+                <li><a href="#doctors" className="hover:text-white transition-colors">Специалисты</a></li>
+                <li><a href="#qa" className="hover:text-white transition-colors">Врач отвечает</a></li>
+                <li><a href="#myths" className="hover:text-white transition-colors">Мифы</a></li>
+                <li><a href="#news" className="hover:text-white transition-colors">Новости</a></li>
                 <li><a href="#stories" className="hover:text-white transition-colors">Истории</a></li>
                 <li><a href="#guide" className="hover:text-white transition-colors">Справочник</a></li>
-                <li><a href="#clinics" className="hover:text-white transition-colors">Клиники</a></li>
               </ul>
             </div>
             <div>
