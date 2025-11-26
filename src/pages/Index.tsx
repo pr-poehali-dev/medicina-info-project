@@ -119,7 +119,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <Icon name="Heart" className="text-primary" size={32} />
               <div>
-                <h1 className="text-2xl font-bold text-primary">МедПортал</h1>
+                <h1 className="text-2xl font-bold text-primary">Айболит</h1>
                 <p className="text-xs text-muted-foreground">Здоровье доступно каждому</p>
               </div>
             </div>
@@ -488,7 +488,7 @@ const Index = () => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Icon name="Heart" size={24} />
-                <span className="font-bold text-lg">МедПортал</span>
+                <span className="font-bold text-lg">Айболит</span>
               </div>
               <p className="text-sm text-slate-400">
                 Ваш надёжный помощник в мире здоровья
@@ -526,7 +526,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
-            © 2024 МедПортал. Все права защищены.
+            © 2024 Айболит. Все права защищены.
           </div>
         </div>
       </footer>
